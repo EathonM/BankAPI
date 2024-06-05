@@ -1,6 +1,5 @@
 ﻿using Banking.Account.Data;
 using Banking.Account.Interfaces;
-using Banking.Account.Services;
 using MediatR;
 using System;
 using System.Collections.Generic;
