@@ -9,8 +9,14 @@
   <ItemGroup>
     <PackageReference Include="AWSSDK.Core" Version="3.7.304.6" />
     <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.7.301.44" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Banking.Account\Banking.Account.csproj" />
   </ItemGroup>
 
 </Project>

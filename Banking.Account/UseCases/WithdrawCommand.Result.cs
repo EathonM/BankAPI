@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Banking.Account.UseCases
 {
-    internal record WithdrawCommandResult(string result);
+    internal record WithdrawCommandResult(bool Success, string Message);
 }

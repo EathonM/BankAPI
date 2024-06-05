@@ -13,7 +13,7 @@ public class Withdraw(IMediator _sender): Endpoint<WithdrawRequest>
     public override void Configure()
     {
         Post(WithdrawRequest.route);
-        Claims("BankAccountHolder");
+        AllowAnonymous();
     }
     public override async Task HandleAsync(WithdrawRequest request, CancellationToken ct)
     {

@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace Banking.Account.UseCases
 {
-    internal record WithdrawCommand(long AccountId, decimal Amount): IRequest<WithdrawResponse>;
+    internal record WithdrawCommand(long AccountId, decimal Amount): IRequest<WithdrawCommandResult>;
 }

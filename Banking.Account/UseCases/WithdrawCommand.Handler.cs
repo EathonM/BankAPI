@@ -1,4 +1,6 @@
 ﻿using Banking.Account.Data;
+using Banking.Account.Interfaces;
+using Banking.Account.Services;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -24,35 +26,17 @@ namespace Banking.Account.UseCases
         {
             var account = await _bankAccountRepository.GetAccount(request.AccountId);
 
-            if (account == null)
-            {
-                return new WithdrawCommandResult
-                {
-                    Success = false,
-                    Message = "Account not found"
-                };
-            }
-
-            if (account.Balance < request.Amount)
-            {
-                return new WithdrawCommandResult
-                {
-                    Success = false,
-                    Message = "Insufficient funds"
-                };
-            }
+            if (account == null) return new WithdrawCommandResult(false, "Account not found");
+            
+            if (account.Balance < request.Amount) return new WithdrawCommandResult(false, "Insufficient Funds");
 
             account.Balance -= request.Amount;
 
-            await _bankAccountRepository.UpdateAccount(account);
+            await _bankAccountRepository.UpdateBalance(account);
 
-            await _notificationService.NotifyAccountHolder(account, $"You have withdrawn {request.Amount}");
+            await _notificationService.NotifyAccountHolder($"You have withdrawn {request.Amount}", cancellationToken);
 
-            return new WithdrawCommandResult
-            {
-                Success = true,
-                Message = "Withdrawal successful"
-            };
+            return new WithdrawCommandResult(true, "Withdrawal Successful");
         }
     }
 }
