@@ -9,7 +9,8 @@ namespace Banking.Account
     public static class ModuleSettingsConsants
     {
         public static string ConnectionString = "Bank.AccountDb";
-        public static string topicARN = "AWS:SNS:TopicARN";
-        public static string snsRegion = "AWS:SNS:regionEndpoint";
+        public static string snsAccountId = "AWS:SNS:YOUR_ACCOUNT_ID";
+        public static string snsTopicName = "AWS:SNS:YOUR_TOPIC_NAME";
+        public static string snsRegionEndpoint = "AWS:SNS:REGION_ENDPOINT";
     }
 }

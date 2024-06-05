@@ -22,7 +22,8 @@ namespace Banking.Account
             _snsClient = new AmazonSimpleNotificationServiceClient(endpoint);
         }
 
-        public async Task NotifyAccountHolder(string message, CancellationToken ct) => await _snsClient.PublishAsync(new PublishRequest(_topicArn, "You have withdrawn"));
+        public async Task NotifyAccountHolder(string message, CancellationToken ct) => 
+            await _snsClient.PublishAsync(new PublishRequest(_topicArn, message));
     }
 
     
