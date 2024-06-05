@@ -1,4 +1,5 @@
-﻿using Amazon.SimpleNotificationService;
+﻿using Amazon;
+using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using Banking.Account.Interfaces;
 using System;
@@ -12,11 +13,16 @@ namespace Banking.Account
     internal class NotificationService : INotificationService
     {
         private readonly IAmazonSimpleNotificationService _snsClient;
-        private readonly string _topicArn = "arn:aws:sns:YOUR_REGION:YOUR_ACCOUNT_ID:YOUR_TOPIC_NAME";
+        private string _topicArn;
 
-        public NotificationService() { }
+        public NotificationService(string topicARN, RegionEndpoint endpoint) 
+        {
 
-        public async Task NotifyAccountHolder(string message, CancellationToken ct) => await _snsClient.PublishAsync(new PublishRequest ));
+            _topicArn = topicARN;
+            _snsClient = new AmazonSimpleNotificationServiceClient(endpoint);
+        }
+
+        public async Task NotifyAccountHolder(string message, CancellationToken ct) => await _snsClient.PublishAsync(new PublishRequest(_topicArn, "You have withdrawn"));
     }
 
     

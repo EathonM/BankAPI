@@ -4,14 +4,27 @@ using FastEndpoints.Security;
 using Serilog;
 
 
+var builder = WebApplication.CreateBuilder(args);
+
+
+var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appSettings.json", optional: false)
+                .Build();
+
 var logger = Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
     .CreateLogger();
+
 logger.Information("Starting up");
 
-var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddConfiguration(config);
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
 

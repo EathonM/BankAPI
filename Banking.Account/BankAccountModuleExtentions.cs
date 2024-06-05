@@ -1,4 +1,5 @@
-﻿using Banking.Account.Data;
+﻿using Amazon;
+using Banking.Account.Data;
 using Banking.Account.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,20 +17,26 @@ namespace Banking.Account
     {
         public static IServiceCollection AddBankAccountModule(
             this IServiceCollection services,
-            ConfigurationManager config,
+            ConfigurationManager hostConfig,
             ILogger logger,
             List<System.Reflection.Assembly> mediatrAssemblies)
         {
-            // read project accountSettings.json here
 
+            var moduleConfig = hostConfig.GetSection("Modules:Account");
 
-            config.
-            var connectionString = config.GetConnectionString("Bank.AccountDb");
-            services.AddDbContext<BankAccountDbContext>(config => 
-                config.UseSqlServer(connectionString));
+            string? connectionString = moduleConfig.GetConnectionString(ModuleSettingsConsants.ConnectionString);
+
+            // TODO: Single Settings Services - decrease overhead
+            var snsTopicArn = moduleConfig.GetValue<string>(ModuleSettingsConsants.topicARN);
+            var snsRegion = moduleConfig.GetValue<string>("AWS:SNS:snsRegion");
+
+            services.AddDbContext<BankAccountDbContext>(options => 
+                options.UseSqlServer(connectionString));
+           
 
             services.AddScoped<IBankAccountRepository, BankAccountRepository>();
-            services.AddScoped<INotificationService, NotificationService>();   
+            services.AddScoped<INotificationService, NotificationService>(s => 
+            new NotificationService(snsTopicArn!, RegionEndpoint.GetBySystemName(snsRegion)));   
             
             mediatrAssemblies.Add(typeof(BankAccountModuleExtentions).Assembly);
 
