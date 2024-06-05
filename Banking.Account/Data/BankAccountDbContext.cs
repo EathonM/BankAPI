@@ -31,6 +31,7 @@ namespace Banking.Account.Data
         private void ConfigureBankAccount(EntityTypeBuilder<BankAccount> builder)
         {
             builder.HasKey(x => x.AccountId);
+            builder.Property(x=> x.AccountId).ValueGeneratedOnAdd();    // assuming no foreign key reference to an Account Entity ?
             builder.Property(x => x.Balance).HasColumnType("decimal(18, 2)").IsRequired();
         }
     }
