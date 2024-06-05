@@ -14,11 +14,17 @@ public class Withdraw(IMediator _sender): Endpoint<WithdrawRequest>
     {
         Post(WithdrawRequest.route);
         AllowAnonymous();
+
+        // TODO: Add Authentication Policy  
     }
     public override async Task HandleAsync(WithdrawRequest request, CancellationToken ct)
     {
         var response = await _sender.Send(new WithdrawCommand(request.AccountId, request.Amount));
 
-        await SendOkAsync(response);
+        if (response.Success)
+        {
+            await SendOkAsync(response);
+        }
+        else await SendAsync(response, 400);
     }
 }
