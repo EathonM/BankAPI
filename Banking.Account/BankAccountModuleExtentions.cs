@@ -20,6 +20,10 @@ namespace Banking.Account
             ILogger logger,
             List<System.Reflection.Assembly> mediatrAssemblies)
         {
+            // read project accountSettings.json here
+
+
+            config.
             var connectionString = config.GetConnectionString("Bank.AccountDb");
             services.AddDbContext<BankAccountDbContext>(config => 
                 config.UseSqlServer(connectionString));

@@ -6,10 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using Banking.Account.UseCases;
+using Serilog;
 
 namespace Banking.Account.Endpoints;
 public class Withdraw(IMediator _sender): Endpoint<WithdrawRequest>
 {
+    
     public override void Configure()
     {
         Post(WithdrawRequest.route);
