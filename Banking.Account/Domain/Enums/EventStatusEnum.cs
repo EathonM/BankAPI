@@ -4,7 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Banking.Account.UseCases
+namespace Banking.Account.Domain
 {
-    internal record WithdrawCommandResult(bool Success, string Message);
+	internal enum EventStatus
+	{
+		Pending,
+		InProgress,
+		Success,
+		Failure
+	}
 }

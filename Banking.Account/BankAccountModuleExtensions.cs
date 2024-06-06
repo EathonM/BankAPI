@@ -1,7 +1,9 @@
 ﻿using Amazon;
-using Banking.Account.Data;
-using Banking.Account.Interfaces;
-using Banking.Account.Settings;
+using Banking.Account.Application;
+using Banking.Account.Application.Interfaces;
+using Banking.Account.Domain.Settings;
+using Banking.Account.Infrastructure;
+using Banking.Account.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

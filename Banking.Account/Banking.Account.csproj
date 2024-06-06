@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Data\EventStatusEnum.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.7.301.44" />
     <PackageReference Include="FastEndpoints" Version="5.25.0" />
     <PackageReference Include="FastEndpoints.Security" Version="5.25.0" />
@@ -22,7 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <Folder Include="Infrastructure\Data\Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Domain\Enums\EventStatusEnum.cs" />
   </ItemGroup>
 
 </Project>

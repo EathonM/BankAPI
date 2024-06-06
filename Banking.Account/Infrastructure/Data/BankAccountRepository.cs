@@ -1,5 +1,5 @@
-﻿
-using Banking.Account.Interfaces;
+﻿using Banking.Account.Application.Interfaces;
+using Banking.Account.Domain.Entities;
 using Banking.Account.UseCases;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,22 +8,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Banking.Account.Data
+namespace Banking.Account.Infrastructure.Data
 {
-    internal class BankAccountRepository: IBankAccountRepository
+    internal class BankAccountRepository : IBankAccountRepository
     {
         private readonly BankAccountDbContext _dbContext;
-        public BankAccountRepository(BankAccountDbContext bankAccountDbContext) 
+        public BankAccountRepository(BankAccountDbContext bankAccountDbContext)
         {
             _dbContext = bankAccountDbContext;
         }
 
-        public async Task<BankAccount> GetAccount(long accountId)
+        public async Task<BankAccount> GetAccountAsync(long accountId)
         {
             return await _dbContext.Account.FindAsync(accountId);
         }
 
-        public async Task UpdateBalance(BankAccount account)
+        public async Task UpdateBalanceAsync(BankAccount account)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Banking.Account.Data
             {
                 throw new Exception("Concurrency exception", ex);
             }
-        }   
+        }
 
         public async Task<BankAccount> Deposit(long accountId, decimal amount)
         {
