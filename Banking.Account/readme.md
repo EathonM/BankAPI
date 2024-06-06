@@ -3,7 +3,7 @@
 This module follows DDD principles with some focus on Vertical Slice Architecture.
 
 ## Layers
-# Presentation
+# Presentation  - Endpoints and Contracts
 1. REPR Endpoints
 The user entry point of this module is the Endpoints. 
 These are REPR -Requests Per Response endpoints.
@@ -21,7 +21,7 @@ The REPR pattern allows code to shipped in slices, allows for higher deployment 
 Endpoint contacts are housed behind the endpoint itself by naming convention. This is simply for the purpose of readibility
 i.e. Withdaw => Withdraw.Request => Withdraw.Response
 
-# Application - Use Cases
+# Application - Use Cases, Handlers and Interfaces
 1. Use cases are contracts or records that are referenced by handlers to execute business logic.
 Here the application layer follows the CQRS pattern. Again, making use of the Mediator pattern allows the module to adhere to CQRS almost intuitively.
 
@@ -29,13 +29,14 @@ Here the application layer follows the CQRS pattern. Again, making use of the Me
 Handler will handle any request (command or query) and execute the appropriate use case.
 
 Handlers reference repositories and interna services via DI, while external modules are referenced via mediatr.
-3. Interfaces are shared between the application and domain layers. This is to ensure that the domain layer is not dependent on the application layer.
-# Domain
+3. Interfaces injected into the application layer to ensure that the domain layer is not dependent on the application layer.
+
+# Domain - Entites and Enums
 Domain exists within the Data folder.
 This is where Dto's can be defined alongside Schema entities. 
 The domain has no reference to any other layer - following DDD principles (losely).
 
-# Infrastructure
+# Infrastructure - Core Services, Data Stores and External Services
 BankAccountModuleExtensions is the registration entry point for the module.
 Infrastructure is injected here as needed, as well as core/shared services that are maintained the host API.
 The Banking.Account module is bootstrapped using mediatr.
