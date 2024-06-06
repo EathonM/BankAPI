@@ -1,6 +1,7 @@
 ﻿using Amazon;
 using Banking.Account.Data;
 using Banking.Account.Interfaces;
+using Banking.Account.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Banking.Account
 {
-    public static class BankAccountModuleExtentions
+    public static class BankAccountModuleExtensions
     {
         public static IServiceCollection AddBankAccountModule(
             this IServiceCollection services,
@@ -29,16 +30,16 @@ namespace Banking.Account
            
 
             services.AddScoped<IBankAccountRepository, BankAccountRepository>();
-            ConfigureSNSSettings(services, moduleConfig);
+            ConfigureSNS(services, moduleConfig);
 
-            mediatrAssemblies.Add(typeof(BankAccountModuleExtentions).Assembly);
+            mediatrAssemblies.Add(typeof(BankAccountModuleExtensions).Assembly);
 
             logger.Information("{Module} module loaded", "BankAccount");
             return services;
         }
 
 
-        private static IServiceCollection ConfigureSNSSettings(this IServiceCollection services , IConfiguration moduleConfig)
+        private static IServiceCollection ConfigureSNS(this IServiceCollection services , IConfiguration moduleConfig)
         {
             var snsAccountID = moduleConfig.GetValue<string>(ModuleSettingsConsants.snsAccountId);
             var snsTopicName = moduleConfig.GetValue<string>(ModuleSettingsConsants.snsTopicName);

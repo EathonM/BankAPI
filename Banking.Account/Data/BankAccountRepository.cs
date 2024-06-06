@@ -1,6 +1,7 @@
 ﻿
 using Banking.Account.Interfaces;
 using Banking.Account.UseCases;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,22 @@ namespace Banking.Account.Data
             _dbContext = bankAccountDbContext;
         }
 
-        public async Task<BankAccount> GetAccount(long accountId) => await _dbContext.Account.FindAsync(accountId);
-
-        public Task UpdateBalance(BankAccount account)
+        public async Task<BankAccount> GetAccount(long accountId)
         {
-            _dbContext.Account.Update(account);
-            return Task.CompletedTask;
+            return await _dbContext.Account.FindAsync(accountId);
+        }
+
+        public async Task UpdateBalance(BankAccount account)
+        {
+            try
+            {
+                _dbContext.Account.Update(account);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new Exception("Concurrency exception", ex);
+            }
         }   
 
         public async Task<BankAccount> Deposit(long accountId, decimal amount)

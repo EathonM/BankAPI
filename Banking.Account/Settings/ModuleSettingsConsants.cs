@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Banking.Account
+namespace Banking.Account.Settings
 {
     public static class ModuleSettingsConsants
     {

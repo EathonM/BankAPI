@@ -24,7 +24,5 @@ namespace Banking.Account
 
         public async Task NotifyAccountHolder(string message, CancellationToken ct) => 
             await _snsClient.PublishAsync(new PublishRequest(_topicArn, message));
-    }
-
-    
+    }    
 }
